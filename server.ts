@@ -26,10 +26,30 @@ app.use(cors()) //add CORS support to each following route handler
 const client = new Client(dbConfig);
 client.connect();
 
-app.get("/", async (req, res) => {
-  const dbres = await client.query('select * from categories');
-  res.json(dbres.rows);
+///////////////////////// GET ALL PASTES /////////////////////////////////////////////////////////
+app.get("/pastes", async (req, res) => {
+
+  try {
+    const allPastes = await client.query('SELECT * FROM pastes ORDER BY date DESC LIMIT 10');
+    res.json(allPastes.rows);
+  } catch (error) {
+    console.error(error.message)
+  }
+ 
 });
+
+///////////////////////// GET SINGLE PASTE /////////////////////////////////////////////////////////
+app.get("/pastes/:id", async (req, res) => {
+
+  try {
+    const {id} = req.params
+    const singlePaste = await client.query('SELECT * FROM pastes WHERE paste_id = $1', [id]);
+    res.json(singlePaste.rows[0]);
+  } catch (error) {
+    console.error(error.message)
+  }
+});
+
 
 
 //Start the server on the given port
