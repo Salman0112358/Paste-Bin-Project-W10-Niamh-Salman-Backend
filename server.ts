@@ -66,6 +66,18 @@ app.post("/pastes", async (req, res) => {
   }
 });
 
+///////////////////////// POST SINGLE PASTE /////////////////////////////////////////////////////////
+app.get("*", async (req, res) => {
+
+  try {
+  
+      res.json("There is nothing here please leave");
+
+  } catch (error) {
+    console.error(error.message)
+  }
+});
+
 
 
 
