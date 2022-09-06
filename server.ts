@@ -51,6 +51,21 @@ app.get("/pastes/:id", async (req, res) => {
 });
 
 
+///////////////////////// POST SINGLE PASTE /////////////////////////////////////////////////////////
+app.post("/pastes", async (req, res) => {
+
+  try {
+    const {title,body} = req.params
+    const postPaste = await client.query(
+      'INSERT INTO pastes (title,body) VALUES ($1,  $2) RETURNING *', [title,body]);
+      res.json(postPaste.rows[0]);
+  } catch (error) {
+    console.error(error.message)
+  }
+});
+
+
+
 
 //Start the server on the given port
 const port = process.env.PORT;
