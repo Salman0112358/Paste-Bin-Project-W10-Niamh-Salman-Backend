@@ -74,7 +74,7 @@ app.put("/pastes/:id", async (req, res) => {
     const updatePaste = await client.query(
       'UPDATE pastes SET title = $1 body = $2 WHERE paste_id = $3 RETURNING *', [title, body, id]
     )
-    res.json(updatePaste.rows[0])
+    res.json(`Paste ${id} updated`)
 
   } catch (error) {
     console.error(error.message)
