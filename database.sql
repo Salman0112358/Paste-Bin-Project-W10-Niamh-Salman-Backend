@@ -1,7 +1,7 @@
 
 CREATE TABLE pastes (
     paste_id SERIAL PRIMARY KEY,
-    title VARCHAR(20),
-    body VARCHAR(255) NOT NULL,
+    title VARCHAR(50),
+    body VARCHAR(5000) NOT NULL,
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
