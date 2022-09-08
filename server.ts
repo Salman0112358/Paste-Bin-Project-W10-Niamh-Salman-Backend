@@ -72,7 +72,7 @@ app.put("/pastes/:id", async (req, res) => {
     const {id} = req.params
     const {title, body} = req.body
     const updatePaste = await client.query(
-      'UPDATE pastes SET title = $1 body = $2 WHERE id = $3 RETURNING *', [title, body, id]
+      'UPDATE pastes SET title = $1 body = $2 WHERE paste_id = $3 RETURNING *', [title, body, id]
     )
     res.json(updatePaste.rows[0])
 
@@ -86,7 +86,7 @@ app.delete("/pastes/:id", async (req, res) => {
   try {
     const {id} = req.params
     await client.query(
-      'DELETE FROM pastes WHERE id = $1', [id]
+      'DELETE FROM pastes WHERE paste_id = $1', [id]
     )
     res.json(`Paste ${id} deleted`)
 
