@@ -72,7 +72,7 @@ app.put("/pastes/:id", async (req, res) => {
     const {id} = req.params
     const {title, body} = req.body
     await client.query(
-      'UPDATE pastes SET title = $1 body = $2 WHERE paste_id = $3 RETURNING *', [title, body, id]
+      'UPDATE pastes SET title = $1, body = $2 WHERE paste_id = $3 RETURNING *', [title, body, id]
     )
     res.json(`Paste ${id} updated`)
 
