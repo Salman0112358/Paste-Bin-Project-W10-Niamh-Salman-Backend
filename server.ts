@@ -66,7 +66,36 @@ app.post("/pastes", async (req, res) => {
   }
 });
 
-///////////////////////// POST SINGLE PASTE /////////////////////////////////////////////////////////
+///////////////////////// EDIT PASTE ///////////////////////////////////////////////////////////////
+app.put("/pastes/:id", async (req, res) => {
+  try {
+    const {id} = req.params
+    const {title, body} = req.body
+    const updatePaste = await client.query(
+      'UPDATE pastes SET title = $1 body = $2 WHERE id = $3 RETURNING *', [title, body, id]
+    )
+    res.json(updatePaste.rows[0])
+
+  } catch (error) {
+    console.error(error.message)
+  }
+});
+
+///////////////////////// DELETE PASTE /////////////////////////////////////////////////////////////
+app.delete("/pastes/:id", async (req, res) => {
+  try {
+    const {id} = req.params
+    await client.query(
+      'DELETE FROM pastes WHERE id = $1', [id]
+    )
+    res.json(`Paste ${id} deleted`)
+
+  } catch (error) {
+    console.error(error.message)
+  }
+});
+
+///////////////////////// CATCH ALL ROUTE /////////////////////////////////////////////////////////
 app.get("*", async (req, res) => {
 
   try {
